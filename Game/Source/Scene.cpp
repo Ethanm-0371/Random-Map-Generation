@@ -58,6 +58,8 @@ bool Scene::Update(float dt)
 	SDL_Rect rect = { 300,100,50,50 };
 	app->render->DrawRectangle(rect, 255, 255, 255, 255, true, true);
 
+	random.Update();
+
 	return true;
 }
 

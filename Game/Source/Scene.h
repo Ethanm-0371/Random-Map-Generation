@@ -2,6 +2,8 @@
 #define __SCENE_H__
 
 #include "Module.h"
+#include "RandomGenerator.h"
+
 
 struct SDL_Texture;
 
@@ -33,6 +35,7 @@ public:
 	bool CleanUp();
 
 private:
+	RandomGenerator random;
 };
 
 #endif // __SCENE_H__
