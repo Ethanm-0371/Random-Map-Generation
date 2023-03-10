@@ -18,6 +18,7 @@ RandomGenerator::~RandomGenerator()
 
 void RandomGenerator::Update()
 {
+	DrawPoints();
 	DrawTriangles();
 }
 
@@ -47,7 +48,7 @@ void RandomGenerator::GeneratePoints(int amount)
 
 	for (size_t i = 0; i < amount; i++)
 	{
-		iPoint point = { randVal(0, w), randVal(0, h) };
+		iPoint point = { randVal(300, w - 300), randVal(200, h - 200) };
 
 		ListItem<iPoint*>* p;
 		p = points.start;
@@ -55,7 +56,7 @@ void RandomGenerator::GeneratePoints(int amount)
 		{
 			if (point.x == p->data->x && point.y == p->data->y)
 			{
-				point = { randVal(0, w), randVal(0, h) };
+				point = { randVal(300, w - 300), randVal(200, h - 200) };
 			}
 
 			p = p->next;
@@ -63,9 +64,16 @@ void RandomGenerator::GeneratePoints(int amount)
 
 		AddPoint(point);
 	}
+
+	iPoint t1 = { 600, -360 };
+	iPoint t2 = { 50, 720 };
+	iPoint t3 = { 1150, 720 };
+
+	Triangle tri = { t1,t2,t3 };
+	AddTriangle(tri);
 }
 
-void RandomGenerator::DrawTriangles()
+void RandomGenerator::DrawPoints()
 {
 	ListItem<iPoint*>* p;
 	p = points.start;
@@ -78,8 +86,11 @@ void RandomGenerator::DrawTriangles()
 
 		p = p->next;
 	}
+}
 
-	/*ListItem<Triangle*>* tri;
+void RandomGenerator::DrawTriangles()
+{
+	ListItem<Triangle*>* tri;
 	tri = triangles.start;
 
 	while (tri != nullptr)
@@ -89,5 +100,5 @@ void RandomGenerator::DrawTriangles()
 		app->render->DrawLine(tri->data->p3.x, tri->data->p3.y, tri->data->p1.x, tri->data->p1.y, 0, 255, 0, 255, true);
 
 		tri = tri->next;
-	}*/
+	}
 }

@@ -27,6 +27,7 @@ public:
 
 	void GeneratePoints(int amount);
 
+	void DrawPoints();
 	void DrawTriangles();
 
 private:
