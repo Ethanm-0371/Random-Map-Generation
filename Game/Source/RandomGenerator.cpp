@@ -69,6 +69,10 @@ void RandomGenerator::GeneratePoints(int amount)
 	iPoint t2 = { 50, 720 };
 	iPoint t3 = { 1150, 720 };
 
+	AddPoint(t1);
+	AddPoint(t2);
+	AddPoint(t3);
+
 	Triangle tri = { t1,t2,t3 };
 	AddTriangle(tri);
 }
