@@ -34,9 +34,10 @@ void RandomGenerator::AddPoint(iPoint p)
 void RandomGenerator::AddTriangle(Triangle t)
 {
 	Triangle* tri = new Triangle;
-	tri->p1 = t.p1;
-	tri->p2 = t.p2;
-	tri->p3 = t.p3;
+	tri->A = t.A;
+	tri->B = t.B;
+	tri->C = t.C;
+	tri->incomplete = true;
 
 	triangles.Add(tri);
 }
@@ -77,6 +78,17 @@ void RandomGenerator::GeneratePoints(int amount)
 	AddTriangle(tri);
 }
 
+iPoint RandomGenerator::FindCircumcenter(Triangle tri)
+{
+	float D = (tri.A.x * (tri.B.y - tri.C.y) + tri.B.x * (tri.C.y - tri.A.y) + tri.C.x * (tri.A.y - tri.B.y)) * 2;
+
+	float x = (1 / D) * ((tri.A.x * tri.A.x + tri.A.y * tri.A.y) * (tri.B.y - tri.C.y) + (tri.B.x * tri.B.x + tri.B.y * tri.B.y) * (tri.C.y - tri.A.y) + (tri.C.x * tri.C.x + tri.C.y * tri.C.y) * (tri.A.y - tri.B.y));
+	float y = (1 / D) * ((tri.A.x * tri.A.x + tri.A.y * tri.A.y) * (tri.C.x - tri.B.x) + (tri.B.x * tri.B.x + tri.B.y * tri.B.y) * (tri.A.x - tri.C.x) + (tri.C.x * tri.C.x + tri.C.y * tri.C.y) * (tri.B.x - tri.A.x));
+
+	iPoint ret = { (int)x,(int)y };
+	return ret;
+}
+
 void RandomGenerator::DrawPoints()
 {
 	ListItem<iPoint*>* p;
@@ -99,9 +111,14 @@ void RandomGenerator::DrawTriangles()
 
 	while (tri != nullptr)
 	{
-		app->render->DrawLine(tri->data->p1.x, tri->data->p1.y, tri->data->p2.x, tri->data->p2.y, 0, 255, 0, 255, true);
-		app->render->DrawLine(tri->data->p2.x, tri->data->p2.y, tri->data->p3.x, tri->data->p3.y, 0, 255, 0, 255, true);
-		app->render->DrawLine(tri->data->p3.x, tri->data->p3.y, tri->data->p1.x, tri->data->p1.y, 0, 255, 0, 255, true);
+		app->render->DrawLine(tri->data->A.x, tri->data->A.y, tri->data->B.x, tri->data->B.y, 0, 255, 0, 255, true);
+		app->render->DrawLine(tri->data->B.x, tri->data->B.y, tri->data->C.x, tri->data->C.y, 0, 255, 0, 255, true);
+		app->render->DrawLine(tri->data->C.x, tri->data->C.y, tri->data->A.x, tri->data->A.y, 0, 255, 0, 255, true);
+
+		Triangle t; t.A = tri->data->A; t.B = tri->data->B; t.C = tri->data->C; t.incomplete = tri->data->incomplete;
+		iPoint circumCenter = FindCircumcenter(t);
+		SDL_Rect rect = { circumCenter.x,circumCenter.y,5,5 };
+		app->render->DrawRectangle(rect, 255, 255, 255, 255, true, true);
 
 		tri = tri->next;
 	}

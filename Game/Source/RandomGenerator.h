@@ -7,9 +7,10 @@
 
 struct Triangle
 {
-	iPoint p1;
-	iPoint p2;
-	iPoint p3;
+	iPoint A;
+	iPoint B;
+	iPoint C;
+	bool incomplete;
 };
 
 class RandomGenerator
@@ -26,6 +27,8 @@ public:
 	void AddTriangle(Triangle t);
 
 	void GeneratePoints(int amount);
+
+	iPoint FindCircumcenter(Triangle tri);
 
 	void DrawPoints();
 	void DrawTriangles();

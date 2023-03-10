@@ -32,6 +32,7 @@ bool Scene::Start()
 {
 	app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
 
+	//Steps 1 to 3
 	random.GeneratePoints(6);
 
 	return true;
