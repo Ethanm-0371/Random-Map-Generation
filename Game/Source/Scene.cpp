@@ -31,6 +31,19 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 	app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
+
+	iPoint t1 = { 1 * 100, 1 * 100 };
+	iPoint t2 = { 3 * 100, 1 * 100 };
+	iPoint t3 = { 2 * 100, 3 * 100 };
+	iPoint t4 = { 5 * 100, 1 * 100 };
+	iPoint t5 = { 4 * 100, 3 * 100 };
+
+	Triangle tri = { t1,t2,t3 };
+	Triangle tri2 = { t2,t4,t5 };
+
+	random.AddTriangle(tri);
+	random.AddTriangle(tri2);
+
 	return true;
 }
 

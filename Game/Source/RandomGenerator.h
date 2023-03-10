@@ -22,16 +22,14 @@ public:
 
 	void Update();
 
-	void DrawTriangle(Triangle t);
+	void AddTriangle(Triangle t);
+
+	void DrawTriangles();
 
 private:
 
-	iPoint t1 = {5 * 100,5 * 100 };
-	iPoint t2 = {3 * 100,1 * 100 };
-	iPoint t3 = {2 * 100,4 * 100 };
-
-	Triangle tri = {t1,t2,t3};
 	List<iPoint*> points;
+	List<Triangle*> triangles;
 };
 
 #endif // __RANDOMGENERATOR_H__
