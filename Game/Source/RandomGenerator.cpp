@@ -1,6 +1,12 @@
 #include "RandomGenerator.h"
 
+#include "Window.h"
 #include "Render.h"
+
+int randVal(int min, int max) {
+
+	return (rand() % (max - min + 1)) + min;
+}
 
 RandomGenerator::RandomGenerator()
 {
@@ -15,6 +21,15 @@ void RandomGenerator::Update()
 	DrawTriangles();
 }
 
+void RandomGenerator::AddPoint(iPoint p)
+{
+	iPoint* point = new iPoint;
+	point->x = p.x;
+	point->y = p.y;
+
+	points.Add(point);
+}
+
 void RandomGenerator::AddTriangle(Triangle t)
 {
 	Triangle* tri = new Triangle;
@@ -25,9 +40,46 @@ void RandomGenerator::AddTriangle(Triangle t)
 	triangles.Add(tri);
 }
 
+void RandomGenerator::GeneratePoints(int amount)
+{
+	uint w; uint h;
+	app->win->GetWindowSize(w, h);
+
+	for (size_t i = 0; i < amount; i++)
+	{
+		iPoint point = { randVal(0, w), randVal(0, h) };
+
+		ListItem<iPoint*>* p;
+		p = points.start;
+		while (p != nullptr)
+		{
+			if (point.x == p->data->x && point.y == p->data->y)
+			{
+				point = { randVal(0, w), randVal(0, h) };
+			}
+
+			p = p->next;
+		}
+
+		AddPoint(point);
+	}
+}
+
 void RandomGenerator::DrawTriangles()
 {
-	ListItem<Triangle*>* tri;
+	ListItem<iPoint*>* p;
+	p = points.start;
+
+	while (p != nullptr)
+	{
+		SDL_Rect rect = { p->data->x,p->data->y,10,10 };
+
+		app->render->DrawRectangle(rect, 0, 255, 0, 255, true, true);
+
+		p = p->next;
+	}
+
+	/*ListItem<Triangle*>* tri;
 	tri = triangles.start;
 
 	while (tri != nullptr)
@@ -37,5 +89,5 @@ void RandomGenerator::DrawTriangles()
 		app->render->DrawLine(tri->data->p3.x, tri->data->p3.y, tri->data->p1.x, tri->data->p1.y, 0, 255, 0, 255, true);
 
 		tri = tri->next;
-	}
+	}*/
 }

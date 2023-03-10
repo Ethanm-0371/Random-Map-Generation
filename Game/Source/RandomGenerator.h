@@ -22,7 +22,10 @@ public:
 
 	void Update();
 
+	void AddPoint(iPoint p);
 	void AddTriangle(Triangle t);
+
+	void GeneratePoints(int amount);
 
 	void DrawTriangles();
 
