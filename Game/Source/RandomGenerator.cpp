@@ -89,6 +89,55 @@ iPoint RandomGenerator::FindCircumcenter(Triangle tri)
 	return ret;
 }
 
+int RandomGenerator::calculateDistance(iPoint point, iPoint triCircumcenter)
+{
+	int dx = point.x - triCircumcenter.x;
+	int dy = point.y - triCircumcenter.y;
+	int sum = dx * dx + dy * dy;
+	int distance = sqrt(sum);
+	return distance;
+}
+
+bool RandomGenerator::distanceCheck(iPoint point, iPoint triCircumcenter, iPoint vertex)
+{
+	int distance = calculateDistance(point, triCircumcenter);
+	int radius = calculateDistance(point, vertex);
+
+	if (distance < radius)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+void RandomGenerator::DelaunayTriangulation()
+{
+	ListItem<iPoint*>* p;
+	p = points.start;
+
+	while (p != nullptr)
+	{
+		ListItem<Triangle*>* t;
+		t = triangles.start;
+
+		while (t != nullptr)
+		{
+			Triangle currentT; currentT.A = t->data->A; currentT.B = t->data->B; currentT.C = t->data->C; currentT.incomplete = t->data->incomplete;
+			iPoint circumCenter = FindCircumcenter(currentT);
+
+			if (distanceCheck(p->data,circumCenter,t->data->A))
+			{
+				//delaunay video minute 3:00
+			}
+
+			t = t->next;
+		}
+
+		p = p->next;
+	}
+}
+
 void RandomGenerator::DrawPoints()
 {
 	ListItem<iPoint*>* p;

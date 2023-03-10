@@ -30,6 +30,11 @@ public:
 
 	iPoint FindCircumcenter(Triangle tri);
 
+	int calculateDistance(iPoint point, iPoint triCircumcenter);
+	bool distanceCheck(iPoint point, iPoint triCircumcenter, iPoint vertex);
+
+	void DelaunayTriangulation();
+
 	void DrawPoints();
 	void DrawTriangles();
 
@@ -37,6 +42,7 @@ private:
 
 	List<iPoint*> points;
 	List<Triangle*> triangles;
+	List<Triangle*> badTriangles;
 };
 
 #endif // __RANDOMGENERATOR_H__
