@@ -30,9 +30,11 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
-	app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
+	random.GeneratePoints(3);
 
-	random.GeneratePoints(6);
+	random.DelaunayTriangulation2();
+
+	//app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
 
 	return true;
 }

@@ -10,7 +10,7 @@ struct Triangle
 	iPoint A;
 	iPoint B;
 	iPoint C;
-	bool incomplete;
+	bool isSuper = false;
 };
 
 class RandomGenerator
@@ -28,12 +28,13 @@ public:
 
 	void GeneratePoints(int amount);
 
-	iPoint FindCircumcenter(Triangle tri);
+	iPoint FindCircumcenter(Triangle* tri);
 
-	int calculateDistance(iPoint point, iPoint triCircumcenter);
-	bool distanceCheck(iPoint point, iPoint triCircumcenter, iPoint vertex);
+	int calculateDistance(iPoint* point, iPoint triCircumcenter);
+	bool distanceCheck(iPoint* point, iPoint triCircumcenter, iPoint vertex);
 
 	void DelaunayTriangulation();
+	void DelaunayTriangulation2();
 
 	void DrawPoints();
 	void DrawTriangles();
