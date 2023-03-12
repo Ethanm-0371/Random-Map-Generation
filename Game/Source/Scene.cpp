@@ -32,7 +32,7 @@ bool Scene::Start()
 {
 	random.GeneratePoints(3);
 
-	random.DelaunayTriangulation2();
+	random.DelaunayTriangulation();
 
 	//app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
 
@@ -49,19 +49,16 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		app->render->camera.y -= 1;
-
-	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 		app->render->camera.y += 1;
 
-	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		app->render->camera.x -= 1;
+	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+		app->render->camera.y -= 1;
 
-	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		app->render->camera.x += 1;
 
-	SDL_Rect rect = { 300,100,50,50 };
-	app->render->DrawRectangle(rect, 255, 255, 255, 255, true, true);
+	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+		app->render->camera.x -= 1;
 
 	random.Update();
 

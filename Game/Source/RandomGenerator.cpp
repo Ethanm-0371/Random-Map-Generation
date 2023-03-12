@@ -117,69 +117,6 @@ void RandomGenerator::DelaunayTriangulation()
 
 	while (p != nullptr)
 	{
-		ListItem<Triangle*>* t;
-		t = triangles.start;
-
-		while (t != nullptr)
-		{
-			iPoint circumCenter = FindCircumcenter(t->data);
-
-			if (distanceCheck(p->data,circumCenter,t->data->A))
-			{
-				badTriangles.Add(t->data);
-			}
-			t = t->next;
-		}
-
-		if (badTriangles.Count() != 0)
-		{
-			ListItem<Triangle*>* badT;
-			badT = badTriangles.start;
-			while (badT != nullptr)
-			{
-				if (!badT->data->isSuper)
-				{
-					triangles.Del(badT);
-				}
-
-				Triangle new1;
-				Triangle new2;
-				Triangle new3;
-
-				new1.A.x = p->data->x; new1.A.y = p->data->y;
-				new1.B = badT->data->B;
-				new1.C = badT->data->C;
-
-				new2.A = badT->data->A;
-				new2.B.x = p->data->x; new2.A.y = p->data->y;
-				new2.C = badT->data->C;
-
-				new3.A = badT->data->A;
-				new3.B = badT->data->B;
-				new3.C.x = p->data->x; new3.C.y = p->data->y;
-
-				AddTriangle(new1);
-				AddTriangle(new2);
-				AddTriangle(new3);
-
-				badT = badT->next;
-			}
-			badTriangles.Clear();
-		}
-
-		p = p->next;
-	}
-
-	LOG("Triangulation Done");
-}
-
-void RandomGenerator::DelaunayTriangulation2()
-{
-	ListItem<iPoint*>* p;
-	p = points.start;
-
-	while (p != nullptr)
-	{
 		LOG("x: %d, y: %d", p->data->x, p->data->y);
 
 		ListItem<Triangle*>* t;
@@ -238,7 +175,7 @@ void RandomGenerator::DelaunayTriangulation2()
 
 				Triangle new2;
 				new2.A = badT->data->A;
-				new2.B.x = p->data->x; new2.A.y = p->data->y;
+				new2.B.x = p->data->x; new2.B.y = p->data->y;
 				new2.C = badT->data->C;
 				AddTriangle(new2);
 
@@ -260,6 +197,21 @@ void RandomGenerator::DelaunayTriangulation2()
 		badTriangles.Clear();
 		p = p->next;
 	}
+
+	if (points.Count() == 0)
+	{
+		LOG("Somthing's wrong, you shouldn't be here");
+	}
+	if (triangles.Count() == 0)
+	{
+		LOG("Somthing's wrong, you shouldn't be here");
+	}
+	if (badTriangles.Count() != 0)
+	{
+		LOG("Somthing's wrong, you shouldn't be here");
+	}
+
+	LOG("Triangulation Done");
 }
 
 void RandomGenerator::DrawPoints()
@@ -269,9 +221,9 @@ void RandomGenerator::DrawPoints()
 
 	while (p != nullptr)
 	{
-		SDL_Rect rect = { p->data->x,p->data->y,10,10 };
+		SDL_Rect rect = { p->data->x - 3,p->data->y - 3,6,6 };
 
-		app->render->DrawRectangle(rect, 0, 255, 0, 255, true, true);
+		app->render->DrawRectangle(rect, 255, 0, 0, 255, true, true);
 
 		p = p->next;
 	}
@@ -284,13 +236,23 @@ void RandomGenerator::DrawTriangles()
 
 	while (tri != nullptr)
 	{
-		app->render->DrawLine(tri->data->A.x, tri->data->A.y, tri->data->B.x, tri->data->B.y, 0, 255, 0, 255, true);
-		app->render->DrawLine(tri->data->B.x, tri->data->B.y, tri->data->C.x, tri->data->C.y, 0, 255, 0, 255, true);
-		app->render->DrawLine(tri->data->C.x, tri->data->C.y, tri->data->A.x, tri->data->A.y, 0, 255, 0, 255, true);
+		if (tri->data->isSuper)
+		{
+			app->render->DrawLine(tri->data->A.x, tri->data->A.y, tri->data->B.x, tri->data->B.y, 255, 255, 0, 255, true);
+			app->render->DrawLine(tri->data->B.x, tri->data->B.y, tri->data->C.x, tri->data->C.y, 255, 255, 0, 255, true);
+			app->render->DrawLine(tri->data->C.x, tri->data->C.y, tri->data->A.x, tri->data->A.y, 255, 255, 0, 255, true);
+		}
+		else
+		{
+			app->render->DrawLine(tri->data->A.x, tri->data->A.y, tri->data->B.x, tri->data->B.y, 0, 255, 0, 255, true);
+			app->render->DrawLine(tri->data->B.x, tri->data->B.y, tri->data->C.x, tri->data->C.y, 0, 255, 0, 255, true);
+			app->render->DrawLine(tri->data->C.x, tri->data->C.y, tri->data->A.x, tri->data->A.y, 0, 255, 0, 255, true);
+		}
+		
 
 		iPoint circumCenter = FindCircumcenter(tri->data);
-		SDL_Rect rect = { circumCenter.x,circumCenter.y,5,5 };
-		app->render->DrawRectangle(rect, 255, 255, 255, 255, true, true);
+		SDL_Rect rect = { circumCenter.x - 3,circumCenter.y - 3,6,6 };
+		app->render->DrawRectangle(rect, 255, 0, 255, 255, true, true);
 
 		tri = tri->next;
 	}

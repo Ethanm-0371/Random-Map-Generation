@@ -34,7 +34,6 @@ public:
 	bool distanceCheck(iPoint* point, iPoint triCircumcenter, iPoint vertex);
 
 	void DelaunayTriangulation();
-	void DelaunayTriangulation2();
 
 	void DrawPoints();
 	void DrawTriangles();
