@@ -1,29 +1,21 @@
-# {Project Name}
+# Random Map Generation
+A GitHub page explaining how to create random map generation in rpg games an some exercise code with its solution.
 
-## Description
+![mc](https://user-images.githubusercontent.com/99729919/223361656-f90c448e-f823-4768-b818-9d90063a8a3b.jpg)
 
-{project description}
+<p align= "center">
+  <img src="https://user-images.githubusercontent.com/99729919/223361656-f90c448e-f823-4768-b818-9d90063a8a3b.jpg" width= "192" height= "108">
+</p>
 
-## Key Features
+Code test
 
- - {Feature01}
- - {Feature02}
- - {Feature03}
- - {Feature04}
- 
-## Controls
+```C++
+int variableTest = 20;
+int variable2 = 0;
+for (int i = 0; i < 100; i++)
+{
+    variable2 = i + variableTest;
+}
+```
 
- - {ControlsScheme}
-
-## Developers
-
- - {Dev01} - {Role(s)}
- - {Dev02} - {Role(s)}
- - {Dev03} - {Role(s)}
- - {Dev04} - {Role(s)}
-
-## License
-
-This project is licensed under an unmodified MIT license, which is an OSI-certified license that allows static linking with closed source software. Check [LICENSE](LICENSE) for further details.
-
-{AdditionalLicenses}
++ Idk what Im doing
