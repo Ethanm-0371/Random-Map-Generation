@@ -35,26 +35,11 @@ bool Map::Awake(pugi::xml_node& config)
 
 void Map::DrawChunk(Chunk* chunk, iPoint position)
 {
-    for (int x = 0; x < chunk->width; x++)
-    {
-        for (int y = 0; y < chunk->height; y++)
-        {
-            int gid = chunk->Get(x, y);
+    //TODO 12: Blit the according tile to their correct position inside the chunk
 
-            TileSet* tileset = GetTilesetFromTileId(gid); // (!!) we are using always the first tileset in the list
 
-            SDL_Rect r = tileset->GetTileRect(gid);
 
-            iPoint mapPos; 
-            mapPos.x = x + position.x;
-            mapPos.y = y + position.y;
-            iPoint pos = MapToScreen(mapPos.x, mapPos.y);
-
-            SDL_Texture* tile_texture = tileset->texture;
-
-            app->render->DrawTexture(tile_texture, pos.x, pos.y, &r);
-        }
-    }
+    //-----------------------------------------------------------
 }
 
 //Translates x, y coordinates from map positions to screen coordinates
@@ -253,22 +238,11 @@ bool Map::LoadTileSet(pugi::xml_node mapFile){
 
 bool Map::LoadChunk(pugi::xml_node& node, Chunk* chunkToLoad)
 {
-    chunkToLoad->location.x = node.attribute("x").as_int();
-    chunkToLoad->location.y = node.attribute("y").as_int();
-    chunkToLoad->width = node.attribute("width").as_int();
-    chunkToLoad->height = node.attribute("height").as_int();
+    //TODO 11: Load all of the necessary information into the Chunk data structure
 
-    //Reserve the memory for the data 
-    chunkToLoad->data = new uint[chunkToLoad->width * chunkToLoad->height];
-    memset(chunkToLoad->data, 0, chunkToLoad->width * chunkToLoad->height);
-    
-    pugi::xml_node tile;
-    int i = 0;
-    for (tile = node.child("tile"); tile; tile = tile.next_sibling("tile"))
-    {
-        chunkToLoad->data[i] = tile.attribute("gid").as_int();
-        i++;
-    }
+
+
+    //-----------------------------------------------------------
 
     return true;
 }
@@ -277,93 +251,11 @@ bool Map::LoadAllChunks(pugi::xml_node mapNode)
 {
     bool ret = true;
 
-    for (pugi::xml_node chunkNode = mapNode.child("layer").child("data").child("chunk"); chunkNode && ret; chunkNode = chunkNode.next_sibling("chunk"))
-    {
-        //Cross
-        if (chunkNode.attribute("x").as_int() == 0 && chunkNode.attribute("y").as_int() == 0)
-        {
-            UDLR = new Chunk();
-            ret = LoadChunk(chunkNode, UDLR);
-        }
+    //TODO 10: Look for all the chunks in the XML file. For each of them, load the individual chunk to its data structure
 
-        //Straights
-        if (chunkNode.attribute("x").as_int() == 0 && chunkNode.attribute("y").as_int() == 16)
-        {
-            LR = new Chunk();
-            ret = LoadChunk(chunkNode, LR);
-        }
-        if (chunkNode.attribute("x").as_int() == 16 && chunkNode.attribute("y").as_int() == 16)
-        {
-            UD = new Chunk();
-            ret = LoadChunk(chunkNode, UD);
-        }
 
-        //Ts
-        if (chunkNode.attribute("x").as_int() == 0 && chunkNode.attribute("y").as_int() == 32)
-        {
-            UDL = new Chunk();
-            ret = LoadChunk(chunkNode, UDL);
-        }
-        if (chunkNode.attribute("x").as_int() == 16 && chunkNode.attribute("y").as_int() == 32)
-        {
-            UDR = new Chunk();
-            ret = LoadChunk(chunkNode, UDR);
-        }
-        if (chunkNode.attribute("x").as_int() == 32 && chunkNode.attribute("y").as_int() == 32)
-        {
-            ULR = new Chunk();
-            ret = LoadChunk(chunkNode, ULR);
-        }
-        if (chunkNode.attribute("x").as_int() == 48 && chunkNode.attribute("y").as_int() == 32)
-        {
-            DLR = new Chunk();
-            ret = LoadChunk(chunkNode, DLR);
-        }
 
-        //Corners
-        if (chunkNode.attribute("x").as_int() == 0 && chunkNode.attribute("y").as_int() == 48)
-        {
-            UR = new Chunk();
-            ret = LoadChunk(chunkNode, UR);
-        }
-        if (chunkNode.attribute("x").as_int() == 16 && chunkNode.attribute("y").as_int() == 48)
-        {
-            UL = new Chunk();
-            ret = LoadChunk(chunkNode, UL);
-        }
-        if (chunkNode.attribute("x").as_int() == 32 && chunkNode.attribute("y").as_int() == 48)
-        {
-            DL = new Chunk();
-            ret = LoadChunk(chunkNode, DL);
-        }
-        if (chunkNode.attribute("x").as_int() == 48 && chunkNode.attribute("y").as_int() == 48)
-        {
-            DR = new Chunk();
-            ret = LoadChunk(chunkNode, DR);
-        }
-
-        //Dead ends
-        if (chunkNode.attribute("x").as_int() == 0 && chunkNode.attribute("y").as_int() == 64)
-        {
-            U = new Chunk();
-            ret = LoadChunk(chunkNode, U);
-        }
-        if (chunkNode.attribute("x").as_int() == 16 && chunkNode.attribute("y").as_int() == 64)
-        {
-            D = new Chunk();
-            ret = LoadChunk(chunkNode, D);
-        }
-        if (chunkNode.attribute("x").as_int() == 32 && chunkNode.attribute("y").as_int() == 64)
-        {
-            L = new Chunk();
-            ret = LoadChunk(chunkNode, L);
-        }
-        if (chunkNode.attribute("x").as_int() == 48 && chunkNode.attribute("y").as_int() == 64)
-        {
-            R = new Chunk();
-            ret = LoadChunk(chunkNode, R);
-        }
-    }
+    //-----------------------------------------------------------
 
     return ret;
 }

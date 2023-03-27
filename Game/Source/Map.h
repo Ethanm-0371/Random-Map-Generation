@@ -31,25 +31,11 @@ enum MapTypes
 	MAPTYPE_STAGGERED
 };
 
-struct Chunk
-{
-	iPoint location;
-	int width, height;
-	uint* data;
+//TODO 9: Create the data structures needed to read the chunks from the XML file
 
-	Chunk() : data(NULL)
-	{}
 
-	~Chunk()
-	{
-		RELEASE(data);
-	}
 
-	inline uint Get(int x, int y) const
-	{
-		return data[(y * width) + x];
-	}
-};
+//-----------------------------------------------------------
 
 struct MapData
 {
@@ -106,21 +92,11 @@ private:
 	SString mapFolder;
     bool mapLoaded;
 
-	Chunk* UDLR;
-	Chunk* LR;
-	Chunk* UD;
-	Chunk* UDL;
-	Chunk* UDR;
-	Chunk* ULR;
-	Chunk* DLR;
-	Chunk* UR;
-	Chunk* UL;
-	Chunk* DL;
-	Chunk* DR;
-	Chunk* U;
-	Chunk* D;
-	Chunk* L;
-	Chunk* R;
+	//TODO 9: Create the data structures needed to read the chunks from the XML file
+
+
+
+	//-----------------------------------------------------------
 
 
 	friend class RandomGenerator;

@@ -1,0 +1,350 @@
+TODO 1:
+enum RoomDoorType
+{
+	UDLR,
+	LR,
+	UD,
+	UDL,
+	UDR,
+	ULR,
+	DLR,
+	UR,
+	UL,
+	DL,
+	DR,
+	U,
+	D,
+	L,
+	R,
+	NO_ROOMS
+};
+
+TODO 5:
+if (up.y >= 0 && grid[up.x][up.y].type == -1)
+	{
+		if (CalculateRoomChance() < spawnChance)
+		{
+			grid[up.x][up.y].type = 1;
+			roomsPlaced++;
+
+			iPoint* upRoom = new iPoint(up);
+			roomsToCheck.Add(upRoom);
+		}
+	}
+	if (down.y < worldSize.y && grid[down.x][down.y].type == -1)
+	{
+		if (CalculateRoomChance() < spawnChance)
+		{
+			grid[down.x][down.y].type = 1;
+			roomsPlaced++;
+
+			iPoint* downRoom = new iPoint(down);
+			roomsToCheck.Add(downRoom);
+		}
+	}
+	if (right.x < worldSize.x && grid[right.x][right.y].type == -1)
+	{
+		if (CalculateRoomChance() < spawnChance)
+		{
+			grid[right.x][right.y].type = 1;
+			roomsPlaced++;
+
+			iPoint* rightRoom = new iPoint(right);
+			roomsToCheck.Add(rightRoom);
+		}
+	}
+	if (left.x >= 0 && grid[left.x][left.y].type == -1)
+	{
+		if (CalculateRoomChance() < spawnChance)
+		{
+			grid[left.x][left.y].type = 1;
+			roomsPlaced++;
+
+			iPoint* leftRoom = new iPoint(left);
+			roomsToCheck.Add(leftRoom);
+		}
+	}
+
+TODO 7:
+if (up.y >= 0 && grid[up.x][up.y].type != -1)
+	{
+		grid[x][y].doorTop = true;
+	}
+	if (down.y < worldSize.y && grid[down.x][down.y].type != -1)
+	{
+		grid[x][y].doorBot = true;
+	}
+	if (right.x < worldSize.x && grid[right.x][right.y].type != -1)
+	{
+		grid[x][y].doorRight = true;
+	}
+	if (left.x >= 0 && grid[left.x][left.y].type != -1)
+	{
+		grid[x][y].doorLeft = true;
+	}
+
+TODO 8:
+if (grid[x][y].type == 1)
+	{
+		//UDLR
+		if (grid[x][y].doorTop && grid[x][y].doorBot && grid[x][y].doorLeft && grid[x][y].doorRight)
+		{
+			grid[x][y].doorsType = RoomDoorType::UDLR;
+		}
+
+
+		//UDL
+		else if (grid[x][y].doorTop && grid[x][y].doorBot && grid[x][y].doorLeft && !grid[x][y].doorRight)
+		{
+			grid[x][y].doorsType = RoomDoorType::UDL;
+		}
+		//UDR
+		else if (grid[x][y].doorTop && grid[x][y].doorBot && !grid[x][y].doorLeft && grid[x][y].doorRight)
+		{
+			grid[x][y].doorsType = RoomDoorType::UDR;
+		}
+		//ULR
+		else if (grid[x][y].doorTop && !grid[x][y].doorBot && grid[x][y].doorLeft && grid[x][y].doorRight)
+		{
+			grid[x][y].doorsType = RoomDoorType::ULR;
+		}
+		//DLR
+		else if (!grid[x][y].doorTop && grid[x][y].doorBot && grid[x][y].doorLeft && grid[x][y].doorRight)
+		{
+			grid[x][y].doorsType = RoomDoorType::DLR;
+		}
+
+
+		//UL
+		else if (grid[x][y].doorTop && !grid[x][y].doorBot && grid[x][y].doorLeft && !grid[x][y].doorRight)
+		{
+			grid[x][y].doorsType = RoomDoorType::UL;
+		}
+		//UR
+		else if (grid[x][y].doorTop && !grid[x][y].doorBot && !grid[x][y].doorLeft && grid[x][y].doorRight)
+		{
+			grid[x][y].doorsType = RoomDoorType::UR;
+		}
+		//DL
+		else if (!grid[x][y].doorTop && grid[x][y].doorBot && grid[x][y].doorLeft && !grid[x][y].doorRight)
+		{
+			grid[x][y].doorsType = RoomDoorType::DL;
+		}
+		//DR
+		else if (!grid[x][y].doorTop && grid[x][y].doorBot && !grid[x][y].doorLeft && grid[x][y].doorRight)
+		{
+			grid[x][y].doorsType = RoomDoorType::DR;
+		}
+
+
+		//UD
+		else if (grid[x][y].doorTop && grid[x][y].doorBot && !grid[x][y].doorLeft && !grid[x][y].doorRight)
+		{
+			grid[x][y].doorsType = RoomDoorType::UD;
+		}
+		//LR
+		else if (!grid[x][y].doorTop && !grid[x][y].doorBot && grid[x][y].doorLeft && grid[x][y].doorRight)
+		{
+			grid[x][y].doorsType = RoomDoorType::LR;
+		}
+
+
+		//U
+		else if (grid[x][y].doorTop && !grid[x][y].doorBot && !grid[x][y].doorLeft && !grid[x][y].doorRight)
+		{
+			grid[x][y].doorsType = RoomDoorType::U;
+		}
+		//D
+		else if (!grid[x][y].doorTop && grid[x][y].doorBot && !grid[x][y].doorLeft && !grid[x][y].doorRight)
+		{
+			grid[x][y].doorsType = RoomDoorType::D;
+		}
+		//L
+		else if (!grid[x][y].doorTop && !grid[x][y].doorBot && grid[x][y].doorLeft && !grid[x][y].doorRight)
+		{
+			grid[x][y].doorsType = RoomDoorType::L;
+		}
+		//R
+		else if (!grid[x][y].doorTop && !grid[x][y].doorBot && !grid[x][y].doorLeft && grid[x][y].doorRight)
+		{
+			grid[x][y].doorsType = RoomDoorType::R;
+		}
+
+		else
+		{
+			LOG("Error: No rooms were generated. Please generate a new dungeon");
+			grid[x][y].doorsType = RoomDoorType::NO_ROOMS;
+		}
+	}
+
+TODO 9:
+Chunk* UDLR;
+Chunk* LR;
+Chunk* UD;
+Chunk* UDL;
+Chunk* UDR;
+Chunk* ULR;
+Chunk* DLR;
+Chunk* UR;
+Chunk* UL;
+Chunk* DL;
+Chunk* DR;
+Chunk* U;
+Chunk* D;
+Chunk* L;
+Chunk* R;
+
+TODO 10:
+for (pugi::xml_node chunkNode = mapNode.child("layer").child("data").child("chunk"); chunkNode && ret; chunkNode = chunkNode.next_sibling("chunk"))
+    {
+        //Cross
+        if (chunkNode.attribute("x").as_int() == 0 && chunkNode.attribute("y").as_int() == 0)
+        {
+            UDLR = new Chunk();
+            ret = LoadChunk(chunkNode, UDLR);
+        }
+
+        //Straights
+        if (chunkNode.attribute("x").as_int() == 0 && chunkNode.attribute("y").as_int() == 16)
+        {
+            LR = new Chunk();
+            ret = LoadChunk(chunkNode, LR);
+        }
+        if (chunkNode.attribute("x").as_int() == 16 && chunkNode.attribute("y").as_int() == 16)
+        {
+            UD = new Chunk();
+            ret = LoadChunk(chunkNode, UD);
+        }
+
+        //Ts
+        if (chunkNode.attribute("x").as_int() == 0 && chunkNode.attribute("y").as_int() == 32)
+        {
+            UDL = new Chunk();
+            ret = LoadChunk(chunkNode, UDL);
+        }
+        if (chunkNode.attribute("x").as_int() == 16 && chunkNode.attribute("y").as_int() == 32)
+        {
+            UDR = new Chunk();
+            ret = LoadChunk(chunkNode, UDR);
+        }
+        if (chunkNode.attribute("x").as_int() == 32 && chunkNode.attribute("y").as_int() == 32)
+        {
+            ULR = new Chunk();
+            ret = LoadChunk(chunkNode, ULR);
+        }
+        if (chunkNode.attribute("x").as_int() == 48 && chunkNode.attribute("y").as_int() == 32)
+        {
+            DLR = new Chunk();
+            ret = LoadChunk(chunkNode, DLR);
+        }
+
+        //Corners
+        if (chunkNode.attribute("x").as_int() == 0 && chunkNode.attribute("y").as_int() == 48)
+        {
+            UR = new Chunk();
+            ret = LoadChunk(chunkNode, UR);
+        }
+        if (chunkNode.attribute("x").as_int() == 16 && chunkNode.attribute("y").as_int() == 48)
+        {
+            UL = new Chunk();
+            ret = LoadChunk(chunkNode, UL);
+        }
+        if (chunkNode.attribute("x").as_int() == 32 && chunkNode.attribute("y").as_int() == 48)
+        {
+            DL = new Chunk();
+            ret = LoadChunk(chunkNode, DL);
+        }
+        if (chunkNode.attribute("x").as_int() == 48 && chunkNode.attribute("y").as_int() == 48)
+        {
+            DR = new Chunk();
+            ret = LoadChunk(chunkNode, DR);
+        }
+
+        //Dead ends
+        if (chunkNode.attribute("x").as_int() == 0 && chunkNode.attribute("y").as_int() == 64)
+        {
+            U = new Chunk();
+            ret = LoadChunk(chunkNode, U);
+        }
+        if (chunkNode.attribute("x").as_int() == 16 && chunkNode.attribute("y").as_int() == 64)
+        {
+            D = new Chunk();
+            ret = LoadChunk(chunkNode, D);
+        }
+        if (chunkNode.attribute("x").as_int() == 32 && chunkNode.attribute("y").as_int() == 64)
+        {
+            L = new Chunk();
+            ret = LoadChunk(chunkNode, L);
+        }
+        if (chunkNode.attribute("x").as_int() == 48 && chunkNode.attribute("y").as_int() == 64)
+        {
+            R = new Chunk();
+            ret = LoadChunk(chunkNode, R);
+        }
+    }
+
+TODO 13:
+switch (grid[i][j].doorsType)
+				{
+				case UDLR:
+					app->map->DrawChunk(app->map->UDLR, placement);
+					break;
+
+
+				case UDL:
+					app->map->DrawChunk(app->map->UDL, placement);
+					break;
+				case UDR:
+					app->map->DrawChunk(app->map->UDR, placement);
+					break;
+				case ULR:
+					app->map->DrawChunk(app->map->ULR, placement);
+					break;
+				case DLR:
+					app->map->DrawChunk(app->map->DLR, placement);
+					break;
+
+
+				case UR:
+					app->map->DrawChunk(app->map->UR, placement);
+					break;
+				case UL:
+					app->map->DrawChunk(app->map->UL, placement);
+					break;
+				case DL:
+					app->map->DrawChunk(app->map->DL, placement);
+					break;
+				case DR:
+					app->map->DrawChunk(app->map->DR, placement);
+					break;
+
+
+				case UD:
+					app->map->DrawChunk(app->map->UD, placement);
+					break;
+				case LR:
+					app->map->DrawChunk(app->map->LR, placement);
+					break;
+
+
+				case U:
+					app->map->DrawChunk(app->map->U, placement);
+					break;
+				case D:
+					app->map->DrawChunk(app->map->D, placement);
+					break;
+				case L:
+					app->map->DrawChunk(app->map->L, placement);
+					break;
+				case R:
+					app->map->DrawChunk(app->map->R, placement);
+					break;
+
+
+				case NO_ROOMS:
+					LOG("Error: No rooms were generated. Please generate a new dungeon");
+					app->map->DrawChunk(app->map->UDLR, placement);
+					break;
+				default:
+					break;
+				}
