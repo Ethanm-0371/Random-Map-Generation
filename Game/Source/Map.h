@@ -31,6 +31,7 @@ enum MapTypes
 	MAPTYPE_STAGGERED
 };
 
+//TODO 9: Create the data structures needed to read the chunks from the XML file
 struct Chunk
 {
 	iPoint location;
@@ -106,6 +107,7 @@ private:
 	SString mapFolder;
     bool mapLoaded;
 
+	//TODO 9: Create the data structures needed to read the chunks from the XML file
 	Chunk* UDLR;
 	Chunk* LR;
 	Chunk* UD;

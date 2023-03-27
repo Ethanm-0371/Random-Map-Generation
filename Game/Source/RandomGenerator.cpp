@@ -24,6 +24,8 @@ RandomGenerator::~RandomGenerator()
 
 void RandomGenerator::Start()
 {
+	//TODO 2: Populate the map and call the main methods
+
 	if (maximumRooms >= worldSize.x * worldSize.y)
 	{
 		maximumRooms = worldSize.x * worldSize.y;
@@ -66,6 +68,8 @@ void RandomGenerator::CheckNeighbours(iPoint* position)
 	iPoint down;	down.x = position->x;		down.y = position->y + 1;
 	iPoint right;	right.x = position->x + 1;	right.y = position->y;
 	iPoint left;	left.x = position->x - 1;	left.y = position->y;
+
+	//TODO 5: Check if the rooms in all directions are free, and if so and the chance is good, change the room type
 
 	if (up.y >= 0 && grid[up.x][up.y].type == -1)
 	{
@@ -120,6 +124,8 @@ void RandomGenerator::SetRoomDoors(int x, int y)
 	iPoint right;	right.x = x + 1;	right.y = y;
 	iPoint left;	left.x = x - 1;		left.y = y;
 
+	//TODO 7: Check if there are rooms in every direction and assign the corresponding door variables
+
 	if (up.y >= 0 && grid[up.x][up.y].type != -1)
 	{
 		grid[x][y].doorTop = true;
@@ -140,6 +146,8 @@ void RandomGenerator::SetRoomDoors(int x, int y)
 
 void RandomGenerator::SetRoomDoorTypes(int x, int y)
 {
+	//TODO 8: Depending on the door variables, assign one RoomDoor type or another
+
 	if (grid[x][y].type == 1)
 	{
 		//UDLR
@@ -236,6 +244,8 @@ void RandomGenerator::SetRoomDoorTypes(int x, int y)
 
 void RandomGenerator::PlaceCenter()
 {
+	//TODO 3: Place the center room and add it to the list of rooms to check
+
 	int centerX = (int)floor(worldSize.x / 2.0f);
 	int centerY = (int)floor(worldSize.y / 2.0f);
 	iPoint* center = new iPoint(centerX, centerY);
@@ -247,6 +257,8 @@ void RandomGenerator::PlaceCenter()
 
 void RandomGenerator::PlaceRooms()
 {
+	//TODO 4: Iterate the list of rooms to check and check their neighbours
+
 	ListItem<iPoint*>* currentRoom;
 	currentRoom = roomsToCheck.start;
 
@@ -262,6 +274,8 @@ void RandomGenerator::PlaceRooms()
 
 void RandomGenerator::PlaceCorridors()
 {
+	//TODO 6: Set the rooms' doors and all of their according types
+
 	for (int i = 0; i < worldSize.x; i++)
 	{
 		for (int j = 0; j < worldSize.y; j++)
@@ -274,6 +288,8 @@ void RandomGenerator::PlaceCorridors()
 
 void RandomGenerator::DrawRooms()
 {
+	//TODO 13: Iterate the map and draw the according chunk depending on its type in the correct position
+
 	for (int i = 0; i < worldSize.x; i++)
 	{
 		for (int j = 0; j < worldSize.y; j++)

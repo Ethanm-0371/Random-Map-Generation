@@ -7,6 +7,7 @@
 
 #include "PugiXml\src\pugixml.hpp"
 
+//TODO 1: Create the data structures needed for the algorithm
 enum RoomDoorType
 {
 	UDLR,
@@ -76,6 +77,7 @@ public:
 
 private:
 
+	//TODO 1: Create the data structures needed for the algorithm
 	iPoint worldSize = { 9,9 };
 	Room grid[9][9];
 	List<iPoint*> roomsToCheck;

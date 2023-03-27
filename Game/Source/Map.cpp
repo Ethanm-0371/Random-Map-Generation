@@ -35,6 +35,8 @@ bool Map::Awake(pugi::xml_node& config)
 
 void Map::DrawChunk(Chunk* chunk, iPoint position)
 {
+    //TODO 12: Blit the according tile to their correct position inside the chunk
+
     for (int x = 0; x < chunk->width; x++)
     {
         for (int y = 0; y < chunk->height; y++)
@@ -253,6 +255,8 @@ bool Map::LoadTileSet(pugi::xml_node mapFile){
 
 bool Map::LoadChunk(pugi::xml_node& node, Chunk* chunkToLoad)
 {
+    //TODO 11: Load all of the necessary information into the Chunk data structure
+
     chunkToLoad->location.x = node.attribute("x").as_int();
     chunkToLoad->location.y = node.attribute("y").as_int();
     chunkToLoad->width = node.attribute("width").as_int();
@@ -276,6 +280,8 @@ bool Map::LoadChunk(pugi::xml_node& node, Chunk* chunkToLoad)
 bool Map::LoadAllChunks(pugi::xml_node mapNode)
 {
     bool ret = true;
+
+    //TODO 10: Look for all the chunks in the XML file. For each of them, load the individual chunk to its data structure
 
     for (pugi::xml_node chunkNode = mapNode.child("layer").child("data").child("chunk"); chunkNode && ret; chunkNode = chunkNode.next_sibling("chunk"))
     {
